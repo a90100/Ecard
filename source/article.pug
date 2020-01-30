@@ -1,0 +1,44 @@
+extends ./layout.pug
+
+block scripts
+  link(rel="stylesheet", href="./css/article.css")
+  link(rel="stylesheet", href="./css/sideBar.css")
+
+block content
+  include ./sideBar.pug
+  .main
+    .article-part
+      .article
+        .article-body
+          if article
+            .content-header
+              .fas.fa-user-circle
+              | #{article.username}
+            h2.article-title.mt-2 #{article.title}
+            a(href="#", title="title").category  #{article.category}
+            span.time ．#{article.time}
+            p.content.mt-3 #{article.content}
+            .response
+              .fas.fa-heart
+              .heart-num 0
+            .response-part
+              h5.mt-4 留言區
+              hr
+              each val in responses
+                .user-response
+                  .user-info
+                    .fas.fa-user-circle
+                    .name #{val.username}
+                    .time #{val.time}
+                  p.content #{val.response}
+                  hr
+              if auth
+                - var id = article.id
+                form(action="/article?id="+id method="post")
+                  .user-response
+                    .user-info
+                      .fas.fa-user-circle 
+                      .name(name="username") #{username}
+                    .mt-3
+                      textarea(class="form-control" rows="5" name="response" value="response")
+                      button(type="submit" class="btn mt-3 float-right") 送出

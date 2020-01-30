@@ -1,0 +1,9 @@
+extends ./layout.pug
+
+block scripts
+  link(rel="stylesheet", href="./css/signout.css")
+
+block content
+  h5 登出成功，待幾秒後跳回登入頁面
+  script
+    include ./js/signout.js

@@ -1,0 +1,95 @@
+@import './_color.sass'
+
+.navbar, .sidebar
+  position: fixed
+.navbar
+  z-index: 100
+
+.main
+  width: 100%
+  padding-top: 66px
+  padding-left: 15%
+  float: left
+  background-color: $deepGreen
+  .article-part
+    float: left
+    background-color: #fff
+    width: 90%
+    height: auto
+    margin: 20px 5% 10px 5%
+    border-radius: 5px
+    padding: 40px 40px 10px 40px
+    color: $deepGray
+
+.article-body
+  .article-title
+    color: #000
+  .content-header
+    display: flex
+    align-items: center
+    .fa-user-circle
+      font-size: 40px
+      margin-right: 10px
+  .category,.time
+    text-decoration: none
+    font-size: 15px
+  .content
+    color: #000
+    font-size: 18px
+  .response
+    margin: 50px 0 15px 0
+  .response-part
+    h5
+      margin-bottom: 5px
+    hr
+      margin-top: 0
+    .user-response
+      margin-top: 30px
+      .user-info
+        display: flex
+        align-items: center
+        .fa-user-circle
+          font-size: 28px
+          padding-right: 10px
+        .name
+          padding-right: 10px
+      .content
+        margin: 10px 0 20px 0
+      textarea
+        resize: none
+        box-shadow: none
+        border-color: $gray2
+      .btn
+        background-color: $green
+        color: #fff
+
+.response
+  display: flex
+  align-items: center
+  color: $gray2
+  font-size: 15px
+  margin-bottom: 10px
+  .fa-heart
+    cursor: pointer
+    color: $red
+    padding-right: 10px
+  .heart-num
+    padding-right: 20px
+  .fa-star
+    cursor: pointer
+    margin-right: 5px
+    color: $blue
+
+form
+  // custom scrollbar
+  ::-webkit-scrollbar
+    width: 5px
+
+  ::-webkit-scrollbar-track
+    -webkit-border-radius: 10px
+    border-radius: 10px
+
+  ::-webkit-scrollbar-thumb 
+    -webkit-border-radius: 4px
+    border-radius: 4px
+    background: $gray2

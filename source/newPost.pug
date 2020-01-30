@@ -1,0 +1,36 @@
+extends ./layout.pug
+
+block scripts
+  link(rel="stylesheet", href="./css/newPost.css")
+
+block content
+  .new-article
+    form(action="/newPost?id="+id method="post")
+      .user-info
+        .fas.fa-user-circle 
+        .name #{username}
+        button#newPost2.btn(type='submit')
+          i.fas.fa-pen
+          | 發文
+      .form-row
+        .form-group.col-md-9
+          label(for='formTitle').h4 標題
+          if article
+            textarea#formTitle.form-control(rows='1' placeholder='請輸入標題' name="title") #{article.title}
+        .form-group.col-md-3
+          label(for='formCategory').h4 選擇文章分類
+          select#formCategory.form-control(name="category")
+            option(value='程式學習') 程式學習
+            option(value='語言學習') 語言學習
+            option(value='心情') 心情
+            option(value='健身') 健身
+            option(value='理財') 理財
+            option(value='工作') 工作
+            option(value='旅遊') 旅遊
+            option(value='遊戲') 遊戲
+            option(value='美食') 美食
+      hr
+      .form-group
+        label(for='formContent') 文章內容
+        if article
+          textarea#formContent.form-control(rows='11' placeholder="寫些內容吧~~" name="content") #{article.content}

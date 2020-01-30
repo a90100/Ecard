@@ -1,0 +1,36 @@
+extends ./layout.pug
+
+block scripts
+  link(rel="stylesheet", href="./css/signup.css")
+
+block content
+  .content
+    .col-6.img
+      img.mb-3(src="./imgs/website.svg")
+      h4.mb-4 聲明: 本作品僅作練習使用
+      h5 本作品使用技術:
+      ul
+        li Pug
+        li Sass
+        li Bootstrap
+        li Node.js
+        li Express.js
+        li Firebase
+    .col-6.login-part
+      form(action="/signup" method="post")
+        .form-group
+          label(for='loginEmail') 常用信箱
+          input#loginEmail.form-control(type='email', aria-describedby='emailHelp' name="email")
+        .form-group
+          label(for='loginPassword') 密碼
+          input#loginPassword.form-control(type='password' name="password")
+        .form-group
+          label(for='loginUserName') 使用者名稱
+          input#loginUserName.form-control(type='text' name="username")
+        .form-check.mb-3
+          input#showPassword.form-check-input(type='checkbox')
+          label.form-check-label(for='showPassword') 顯示密碼
+        button.btn.mb-2(type='submit' class="mr-3") 註冊
+        p #{error}
+  script
+    include ./js/index.js

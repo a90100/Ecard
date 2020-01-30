@@ -1,0 +1,23 @@
+extends ./layout.pug
+
+block scripts
+  link(rel="stylesheet", href="./css/user.css")
+
+block content
+  .content
+    h3 使用者名稱 : #{username}
+    h5.mt-4 你發布的文章 :
+  .list-group.person-articles.mt-3
+    each val in articles
+      - var id = val.id
+      .d-flex.align-items-center
+        a.list-group-item.list-group-item-action.mr-3(href="/article?id=" + id) 
+          .btn= val.title
+        form(action="/user/edit?id="+id method="post")
+          button(type="submit" class="btn edit-btn btn-outline-success mr-3")
+            i.fas.fa-pencil-alt.mr-2
+            | 編輯
+        form(action="/user/delete?id="+id method="post")
+          button(type="submit" class="btn delete-btn btn-outline-danger")
+            i.fas.fa-trash-alt.mr-2
+            | 刪除

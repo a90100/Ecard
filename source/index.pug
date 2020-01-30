@@ -1,0 +1,27 @@
+extends ./layout.pug
+
+block scripts
+  link(rel="stylesheet", href="./css/index.css")
+  link(rel="stylesheet", href="./css/sideBar.css")
+
+block content
+  include ./sideBar.pug
+  .main
+    .article-list
+      p.title 全部
+      hr
+      if articles
+        each val in articles
+          - var id = val.id
+          a(href="/article?id=" + id)
+            .article-link(data-toggle="modal" data-target="#articleModal")
+              .article
+                .user-info
+                  .fas.fa-user-circle 
+                  .name #{val.username}
+                  .time #{val.time}
+                p.article-title #{val.title}
+                p.article-content #{val.content}
+                .response
+                  .fas.fa-heart(@click="addHeart")
+                  .heart-num 0
