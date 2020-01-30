@@ -3,21 +3,25 @@
 ## Demo
 https://imitate-dcard.herokuapp.com/index
 
-## 部分畫面功能截圖
-### 開始畫面
-![](https://i.imgur.com/miD6HRK.png)
+## 畫面功能截圖
+### 開始畫面，點擊左側欄可選擇分類文章，在上方搜尋欄可用關鍵字搜尋文章標題
+![](https://i.imgur.com/mN3bW9w.png)
 
 ## 登入與註冊
-![](https://i.imgur.com/za9JJlN.png)
+登入
+![](https://i.imgur.com/bkAY8Gi.png)
 
-## 個人資訊頁
-![](https://i.imgur.com/dYrsYC5.png)
+註冊
+![](https://i.imgur.com/mK8Rtkx.png)
 
-## 單篇文章
-![](https://i.imgur.com/sHvOvbf.png)
+## 個人資訊頁，可編輯和刪除文章
+![](https://i.imgur.com/SPd4rcH.png)
 
-## 編輯文章
-![](https://i.imgur.com/rC0239C.png)
+## 單篇文章，包含留言板
+![](https://i.imgur.com/BsaJmfD.png)
+
+## 編輯和發布文章
+![](https://i.imgur.com/vxvBR54.png)
 
 ## 功能
 1. 可註冊及登入帳號
