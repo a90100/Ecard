@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 var firebaseDb = require('../connection/firebase_admin.js');
 
-// 用query string完成...感動TAT，印出單一文章
-router.get('/article', function (req, res) {
+// 印出單一文章
+router.get('/article/:id', function (req, res) {
   let auth = req.session.uid;
-  let id = req.query.id;
+  let id = req.params.id;
   req.session.id = id;
   req.session.articleId = '';
   let responses = [];

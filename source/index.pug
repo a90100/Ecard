@@ -1,8 +1,8 @@
 extends ./layout.pug
 
 block scripts
-  link(rel="stylesheet", href="./css/index.css")
-  link(rel="stylesheet", href="./css/sideBar.css")
+  link(rel="stylesheet", href="/css/index.css")
+  link(rel="stylesheet", href="/css/sideBar.css")
 
 block content
   include ./sideBar.pug
@@ -13,7 +13,7 @@ block content
       if articles
         each val in articles
           - var id = val.id
-          a(href="/article?id=" + id)
+          a(href=`/article/${id}`)
             .article-link(data-toggle="modal" data-target="#articleModal")
               .article
                 .user-info
@@ -23,5 +23,4 @@ block content
                 p.article-title #{val.title}
                 p.article-content #{val.content}
                 .response
-                  .fas.fa-heart(@click="addHeart")
-                  .heart-num 0
+                  .fas.fa-bookmark(@click="addMark")

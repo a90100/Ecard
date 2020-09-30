@@ -35,7 +35,7 @@
   padding-left: 10px;
 }
 
-.new-article form .user-info #newPost {
+.new-article form .user-info #newPost2 {
   background-color: #36bc51;
   color: #fff;
   outline: none;
@@ -45,11 +45,11 @@
   margin-right: 0;
 }
 
-.new-article form .user-info #newPost:hover {
+.new-article form .user-info #newPost2:hover {
   background-color: #2d9b43;
 }
 
-.new-article form .user-info #newPost .fa-pen {
+.new-article form .user-info #newPost2 .fa-pen {
   padding-right: 10px;
 }
 /*# sourceMappingURL=newPost.css.map */

@@ -40,8 +40,9 @@ https://imitate-dcard.herokuapp.com/index
 * Express.js
 * Firebase
 
-## 注意
-由於這個公開 side project 不包括 firebase 金鑰等重要資訊，所以 clone 下來不會順利運作，主要是放給面試官看程式碼用
+## command
+啟動應用程式: npm start
+啟動 gulp: gulp watch
 
 ## 解決 firebase 重複 register:
 "firebase": "^6.4.1",

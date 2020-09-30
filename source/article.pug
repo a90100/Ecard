@@ -1,8 +1,8 @@
 extends ./layout.pug
 
 block scripts
-  link(rel="stylesheet", href="./css/article.css")
-  link(rel="stylesheet", href="./css/sideBar.css")
+  link(rel="stylesheet", href="/css/article.css")
+  link(rel="stylesheet", href="/css/sideBar.css")
 
 block content
   include ./sideBar.pug
@@ -19,8 +19,7 @@ block content
             span.time ．#{article.time}
             p.content.mt-3 #{article.content}
             .response
-              .fas.fa-heart
-              .heart-num 0
+              .fas.fa-bookmark(@click="addMark")
             .response-part
               h5.mt-4 留言區
               hr
@@ -34,7 +33,7 @@ block content
                   hr
               if auth
                 - var id = article.id
-                form(action="/article?id="+id method="post")
+                form(action=`/article/${id}` method="post")
                   .user-response
                     .user-info
                       .fas.fa-user-circle 
@@ -42,3 +41,6 @@ block content
                     .mt-3
                       textarea(class="form-control" rows="5" name="response" value="response")
                       button(type="submit" class="btn mt-3 float-right") 送出
+
+  script
+    include ./js/onLoad.js

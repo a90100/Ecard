@@ -12,6 +12,7 @@
 .navbar .navbar-brand a {
   color: #fff;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .input-group .form-control, .input-group .input-group-text {

@@ -5,6 +5,7 @@ var firebaseDb = require('../connection/firebase_admin.js');
 // 新增文章和修改文章
 router.post('/newPost', function (req, res) {
   let auth = req.session.uid;
+  let content = req.body.content.replace(/\r\n/g, '<br>');
   
   firebaseDb.ref('user/' + auth).once('value')
   .then(function (snapshot) {
@@ -32,7 +33,7 @@ router.post('/newPost', function (req, res) {
         username: username,
         title: req.body.title,
         category: req.body.category,
-        content: req.body.content,
+        content: content,
         id: articleId,
         time: time
       }
