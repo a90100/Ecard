@@ -1,87 +1,169 @@
 var express = require('express');
 var router = express.Router();
 var firebaseDb = require('../connection/firebase_admin.js');
+var { getTime } = require('../source/js/getTime');
+var multer = require("multer");
+var imgurClientId = require('../connection/imgur_api');
+var rp = require('request-promise');
 
-// 新增文章和修改文章
+var upload = multer({
+  fileFilter: (req, file, cb) => {
+      if (file.mimetype == "image/png" || file.mimetype == "image/jpeg") {
+          cb(null, true)
+      } else {
+          cb(null, false)
+          return cb(new Error('Allowed only .png or .jpg'))
+      }
+  }
+})
+
+// 新增文章
 router.post('/newPost', function (req, res) {
   let auth = req.session.uid;
-  let content = req.body.content.replace(/\r\n/g, '<br>');
+  let content = req.body.content;
   
   firebaseDb.ref('user/' + auth).once('value')
   .then(function (snapshot) {
       let articleId = '';
       let username = snapshot.val().username;
-      let year = new Date().getFullYear();
-      let month = new Date().getMonth() + 1;
-      let date = new Date().getDate();
-      let hours = new Date().getHours();
-      let minutes = new Date().getMinutes();
-      let time = year + '年' + month + '月' + date + '日 ' + hours + ':' + minutes;
       
-      if (req.session.articleId == '' || undefined) {
-        articleId = firebaseDb.ref('articles/').push(); // 隨機產生一個id
-        articleId = articleId.toString().slice(45, 65);
-      } else {
-        articleId = req.session.articleId;
-        firebaseDb.ref('/articles/' + articleId).once('value', function (snapshot) {
-          time = snapshot.val().time;
-        })
-      }
+      articleId = firebaseDb.ref('articles/').push(); // 隨機產生一個id
+      articleId = articleId.toString().slice(45, 65);
+      firebaseDb.ref('/articles/' + articleId).once('value', function (snapshot) {
+        time = snapshot.val().time;
+      })
 
       let articleInfo = {
         uid: req.session.uid,
-        username: username,
+        username,
         title: req.body.title,
         category: req.body.category,
-        content: content,
+        content,
         id: articleId,
-        time: time
+        time: getTime(),
       }
+
       req.session.articleId = articleInfo.id;
       return firebaseDb.ref('/articles/' + articleInfo.id).set(articleInfo);
     })
     .then(function (snapshot) {
-      res.redirect('/article?id=' + req.session.articleId);
+      res.redirect(`/article/${req.session.articleId}`);
     })
     .catch(function(e) {
       console.log(e);
     })
 })
 
-// 進入編輯文章頁面
-router.get('/newPost', function (req, res, next) {
+// 修改文章
+router.post('/newPost/:id', function (req, res) {
   let auth = req.session.uid;
-  let articleId = req.query.id || '';
+  let content = req.body.content;
+
+  firebaseDb.ref('user/' + auth).once('value')
+  .then(function (snapshot) {
+      let username = snapshot.val().username;
+
+      let articleInfo = {
+        uid: req.session.uid,
+        username,
+        title: req.body.title,
+        category: req.body.category,
+        content,
+        id: req.session.articleId,
+        time: getTime(),
+      }
+
+      return firebaseDb.ref('/articles/' + articleInfo.id).set(articleInfo);
+    })
+    .then(function (snapshot) {
+      res.redirect(`/article/${req.session.articleId}`);
+    })
+    .catch(function(e) {
+      console.log(e);
+    })
+})
+
+// 加入圖片
+router.post('/addImg', upload.single('image'), function (req, res) {
+  let encode_image = req.file.buffer.toString("base64");
+  let articleId = '';
+  if(!req.session.articleId) {
+    articleId = firebaseDb.ref('articles/').push(); // 隨機產生一個id
+    articleId = articleId.toString().slice(45, 65);
+    req.session.articleId = articleId;
+    firebaseDb.ref('/articles/' + req.session.articleId).set({'img': ''});
+  }
+
+  options = {
+    'method': 'POST',
+    'url': 'https://api.imgur.com/3/image',
+    'headers': {
+        'Authorization': 'Client-ID ' + imgurClientId
+    },
+    formData: {
+        'image': encode_image
+    }
+  };
+
+  rp(options)
+    .then(function (body) {
+        return JSON.parse(body).data.link;
+    })
+    .then(function (imgUrl) {
+      return firebaseDb.ref('/articles/' + req.session.articleId + '/img').set(` <img&nbspsrc=${imgUrl}&nbspname="imgUrl"> `);
+    })
+    .then(function (snapshot) {
+      res.redirect(`/newPost/${req.session.articleId}`);
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+})
+
+// 進入新增文章頁面
+router.get('/newPost', function (req, res) {
+  let auth = req.session.uid;
+
+  firebaseDb.ref('user/' + auth).once('value', function (snapshot) {
+    let article = {
+      id: '',
+      title: '',
+      content: ''
+    }
+
+    res.render('newPost', {
+      auth,
+      username: snapshot.val().username,
+      article
+    });
+  })
+});
+
+// 進入編輯文章頁面
+router.get('/newPost/:id', function (req, res) {
+  let auth = req.session.uid;
+  let articleId = req.params.id || '';
   req.session.articleId = articleId;
 
-  if (articleId == '') {
-    firebaseDb.ref('user/' + auth).once('value', function (snapshot) {
-      let article = {
-        title: '',
-        content: ''
+  let article = {}
+  firebaseDb.ref('articles/' + articleId).once('value')
+    .then(function (snapshot) {
+      article = snapshot.val();
+
+      if(article.img) {
+        article.content += `${article.img}`;
+        firebaseDb.ref('/articles/' + articleId + '/img').set('');
       }
+
+      return firebaseDb.ref('user/' + auth).once('value');
+    })
+    .then(function (snapshot) {
       res.render('newPost', {
-        auth: auth,
+        auth,
         username: snapshot.val().username,
-        article: article
+        article
       });
     })
-  } else {
-    let article = {}
-    firebaseDb.ref('articles/' + articleId).once('value')
-      .then(function (snapshot) {
-        article = snapshot.val();
-
-        return firebaseDb.ref('user/' + auth).once('value');
-      })
-      .then(function (snapshot) {
-        res.render('newPost', {
-          auth: auth,
-          username: snapshot.val().username,
-          article: article
-        });
-      })
-  }
 });
 
 module.exports = router;

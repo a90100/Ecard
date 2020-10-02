@@ -2,14 +2,14 @@
   margin: 0 auto;
 }
 
-.new-article form {
-  padding-top: 40px;
+.new-article form.createArticle {
+  padding-top: 30px;
   width: 60%;
   margin: 0 auto;
   color: #818689;
 }
 
-.new-article form .form-control {
+.new-article form.createArticle .form-control {
   outline: none;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -17,7 +17,7 @@
   resize: none;
 }
 
-.new-article form .user-info {
+.new-article form.createArticle .user-info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -27,15 +27,15 @@
   margin-bottom: 20px;
 }
 
-.new-article form .user-info .fa-user-circle {
+.new-article form.createArticle .user-info .fa-user-circle {
   font-size: 28px;
 }
 
-.new-article form .user-info .name {
+.new-article form.createArticle .user-info .name {
   padding-left: 10px;
 }
 
-.new-article form .user-info #newPost2 {
+.new-article form.createArticle .user-info #newPost2 {
   background-color: #36bc51;
   color: #fff;
   outline: none;
@@ -45,11 +45,33 @@
   margin-right: 0;
 }
 
-.new-article form .user-info #newPost2:hover {
+.new-article form.createArticle .user-info #newPost2:hover {
   background-color: #2d9b43;
 }
 
-.new-article form .user-info #newPost2 .fa-pen {
+.new-article form.createArticle .user-info #newPost2 .fa-pen {
   padding-right: 10px;
+}
+
+.new-article form.addImg {
+  width: 60%;
+  margin: 25px auto 0 auto;
+}
+
+.new-article form.addImg .uploadImg {
+  background-color: #2d9b43;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.new-article form.addImg .uploadImg input[type='file'] {
+  display: none;
+}
+
+.new-article form.addImg button {
+  margin-left: 10px;
+  border: 1px solid #2d9b43;
 }
 /*# sourceMappingURL=newPost.css.map */

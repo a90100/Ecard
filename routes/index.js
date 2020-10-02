@@ -28,8 +28,8 @@ router.get('/index', function (req, res) {
     articles = articles.reverse();
     req.session.search = undefined;
     res.render('index', {
-      auth: auth,
-      articles: articles
+      auth,
+      articles
     });
   })
 });

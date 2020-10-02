@@ -1,7 +1,7 @@
 extends ./layout.pug
 
 block scripts
-  link(rel="stylesheet", href="./css/user.css")
+  link(rel="stylesheet", href="/css/user.css")
 
 block content
   .content
@@ -11,7 +11,7 @@ block content
     each val in articles
       - var id = val.id
       .d-flex.align-items-center
-        a.list-group-item.list-group-item-action.mr-3(href="/article?id=" + id) 
+        a.list-group-item.list-group-item-action.mr-3(href=`/article/${id}`) 
           .btn= val.title
         form(action="/user/edit?id="+id method="post")
           button(type="submit" class="btn edit-btn btn-outline-success mr-3")

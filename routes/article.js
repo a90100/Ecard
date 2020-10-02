@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var firebaseDb = require('../connection/firebase_admin.js');
+var { getTime } = require('../source/js/getTime');
 
 // 印出單一文章
 router.get('/article/:id', function (req, res) {
@@ -20,24 +21,18 @@ router.get('/article/:id', function (req, res) {
   .then(function (snapshot) {
     usrname = snapshot.val().username;
     res.render('article', {
-      auth: auth,
+      auth,
       article: snapshot.val(),
       responses: responses || [],
-      username: username
+      username
     });
   })
 })
 
 // 新增回應
-router.post('/article', function (req, res) {
-  let id = req.query.id;
+router.post('/article/:id', function (req, res) {
+  let id = req.params.id;
   let response = req.body.response;
-  let year = new Date().getFullYear();
-  let month = new Date().getMonth() + 1;
-  let date = new Date().getDate();
-  let hours = new Date().getHours();
-  let minutes = new Date().getMinutes();
-  let time = year + '年' + month + '月' + date + '日 ' + hours + ':' + minutes;
   let responseId = firebaseDb.ref('responses/' + id).push();
 
   firebaseDb.ref('/user/' + req.session.uid).once('value')
@@ -46,14 +41,14 @@ router.post('/article', function (req, res) {
 
       let responseContent = {
         'username': username,
-        'time': time,
-        'response': response
+        'time': getTime(),
+        'response': response.replace(/\r\n/g, '<br>')
       }
 
       return firebaseDb.ref('responses/' + id + '/' + responseId.key).set(responseContent);
     })
     .then(function (snapshot) {
-      res.redirect('/article?id=' + id);
+      res.redirect(`/article/${id}`);
     })
 })
 

@@ -4,7 +4,7 @@ var firebaseDb = require('../connection/firebase_admin.js');
 var firebase = require('../connection/firebase_auth.js');
 
 // 申請帳號
-router.post('/signup', function (req, res, next) {
+router.post('/signup', function (req, res) {
   let email = req.body.email;
   let password = req.body.password;
   let username = req.body.username;
@@ -20,7 +20,7 @@ router.post('/signup', function (req, res, next) {
     })
     .catch(function (error) {
       let errorMessage = error.message;
-      if (errorMessage === 'Password should be at least 6 characters') {
+      if (errorMessage === 'The password must be 6 characters long or more.') {
         errorMessage = '密碼必須超過六個字元';
       } else if (errorMessage === 'The email address is already in use by another account.') {
         errorMessage = '此Email已被使用';
@@ -31,11 +31,11 @@ router.post('/signup', function (req, res, next) {
 })
 
 // 進入註冊頁面
-router.get('/signup', function (req, res, next) {
+router.get('/signup', function (req, res) {
   let auth = req.session.uid;
   res.render('signup', {
     error: req.flash('error'),
-    auth: auth
+    auth
   });
 });
 

@@ -44,7 +44,7 @@ router.post('/user/delete', function (req, res) {
 // 搭配編輯鍵
 router.post('/user/edit', function (req, res) {
   firebaseDb.ref('articles/' + req.query.id).once('value', function (snapshot) {
-    res.redirect('/newPost?id=' + req.query.id);
+    res.redirect(`/newPost/${req.query.id}`);
   });
 })
 

@@ -8,6 +8,8 @@
 
 .main {
   width: 100%;
+  min-height: 100vh;
+  height: 100%;
   padding-top: 66px;
   padding-left: 15%;
   float: left;

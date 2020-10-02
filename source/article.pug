@@ -15,11 +15,9 @@ block content
               .fas.fa-user-circle
               | #{article.username}
             h2.article-title.mt-2 #{article.title}
-            a(href="#", title="title").category  #{article.category}
+            a(href="javascript:void(0)", title="title").category  #{article.category}
             span.time ．#{article.time}
             p.content.mt-3 #{article.content}
-            .response
-              .fas.fa-bookmark(@click="addMark")
             .response-part
               h5.mt-4 留言區
               hr

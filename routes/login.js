@@ -12,7 +12,6 @@ router.post('/login', function (req, res) {
       res.redirect('/index');
     })
     .catch(function (error) {
-      console.log(error);
       if (error.message === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
         error.message = '找不到該用戶';
       } else if (error.message === 'The password is invalid or the user does not have a password.') {
@@ -26,11 +25,11 @@ router.post('/login', function (req, res) {
 })
 
 // 登入功能
-router.get('/login', function (req, res, next) {
+router.get('/login', function (req, res) {
   let auth = req.session.uid;
   res.render('login', {
     error: req.flash('error'),
-    auth: auth
+    auth
   });
 });
 

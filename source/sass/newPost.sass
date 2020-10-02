@@ -2,8 +2,8 @@
 
 .new-article
   margin: 0 auto
-  form
-    padding-top: 40px
+  form.createArticle
+    padding-top: 30px
     width: 60%
     margin: 0 auto
     color: $deepGray
@@ -31,3 +31,17 @@
           background-color: $deepGreen
         .fa-pen
           padding-right: 10px
+  form.addImg
+    width: 60%
+    margin: 25px auto 0 auto
+    .uploadImg
+      background-color: $deepGreen
+      color: #fff
+      padding: 5px 10px
+      cursor: pointer
+      border-radius: 5px
+      input[type='file']
+        display: none
+    button
+      margin-left: 10px
+      border: 1px solid $deepGreen

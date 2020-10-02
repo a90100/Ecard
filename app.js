@@ -1,19 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var session = require('express-session');
-var flash = require('connect-flash');
-var app = express();
-var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
-var newPostRouter = require('./routes/newPost');
-var signupRouter = require('./routes/signup');
-var signoutRouter = require('./routes/signout');
-var userRouter = require('./routes/user');
-var articleRouter = require('./routes/article');
-var categoryRouter = require('./routes/category');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const session = require('express-session');
+const flash = require('connect-flash');
+const app = express();
+const indexRouter = require('./routes/index');
+const loginRouter = require('./routes/login');
+const newPostRouter = require('./routes/newPost');
+const signupRouter = require('./routes/signup');
+const signoutRouter = require('./routes/signout');
+const userRouter = require('./routes/user');
+const articleRouter = require('./routes/article');
+const categoryRouter = require('./routes/category');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'source'));
@@ -52,7 +52,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
