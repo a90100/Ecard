@@ -1,7 +1,7 @@
 # Ecard
 模仿 Dcard 部分功能製作出的網站，可讓人建立帳號發表文章
 ## Demo
-https://imitate-dcard.herokuapp.com/index
+https://ecard-new.herokuapp.com/index
 
 ## 畫面功能截圖
 ### 開始畫面，點擊左側欄可選擇分類文章，在上方搜尋欄可用關鍵字搜尋文章標題
