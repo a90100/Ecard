@@ -10,11 +10,11 @@ https://ecard-new.herokuapp.com/index
 ## 登入與註冊
 登入
 
-![](https://i.imgur.com/bkAY8Gi.png)
+![](https://i.imgur.com/mUSfpqx.png)
 
 註冊
 
-![](https://i.imgur.com/mK8Rtkx.png)
+![](https://i.imgur.com/ZlHIiCc.png)
 
 ## 個人資訊頁，可編輯和刪除文章
 ![](https://i.imgur.com/HzSwSxG.png)
