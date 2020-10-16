@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var firebaseDb = require('../connection/firebase_admin.js');
+const express = require('express');
+const router = express.Router();
+const firebaseDb = require('../connection/firebase_admin.js');
 
-// 取得使用者發布的文章
+// get user's articles
 router.get('/user', function (req, res, next) {
-  let auth = req.session.uid;
+  const auth = req.session.uid;
   let username = '';
   let articles = [];
   let filteredArticles = [];
@@ -19,7 +19,7 @@ router.get('/user', function (req, res, next) {
         articles.push(snapshotChild.val());
       })
 
-      // 過濾非該使用者的文章
+      // filter not user's articles
       let articlesLength = articles.length;
       for (let i = 0; i < articlesLength; i++) {
         if (articles[i].uid === auth) {
@@ -35,13 +35,13 @@ router.get('/user', function (req, res, next) {
     })
 });
 
-// 搭配刪除鍵
+// delete article
 router.post('/user/delete', function (req, res) {
   firebaseDb.ref('articles/' + req.query.id).remove();
   res.redirect('/user');
 })
 
-// 搭配編輯鍵
+// edit article
 router.post('/user/edit', function (req, res) {
   firebaseDb.ref('articles/' + req.query.id).once('value', function (snapshot) {
     res.redirect(`/newPost/${req.query.id}`);

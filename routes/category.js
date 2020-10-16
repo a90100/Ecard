@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var firebaseDb = require('../connection/firebase_admin.js');
+const express = require('express');
+const router = express.Router();
+const firebaseDb = require('../connection/firebase_admin.js');
 
-// 分類篩選
+// category filter
 router.get('/category/:id', function (req, res) {
-    let auth = req.session.uid;
+    const auth = req.session.uid;
     firebaseDb.ref('articles').once('value', function (snapshot) {
     let articles = [];
     

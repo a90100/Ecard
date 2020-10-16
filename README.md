@@ -1,5 +1,5 @@
 # Ecard
-模仿 Dcard 部分功能製作出的網站，可讓人建立帳號發表文章
+一個可讓人建立帳號發表文章的網站
 ## Demo
 https://ecard-new.herokuapp.com/index
 

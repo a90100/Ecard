@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var firebaseDb = require('../connection/firebase_admin.js');
-var { getTime } = require('../source/js/getTime');
-var multer = require("multer");
-var imgurClientId = require('../connection/imgur_api');
-var rp = require('request-promise');
+const express = require('express');
+const router = express.Router();
+const firebaseDb = require('../connection/firebase_admin.js');
+const { getTime } = require('../source/js/getTime');
+const multer = require("multer");
+const imgurClientId = require('../connection/imgur_api');
+const rp = require('request-promise');
 
-var upload = multer({
+const upload = multer({
   fileFilter: (req, file, cb) => {
       if (file.mimetype == "image/png" || file.mimetype == "image/jpeg") {
           cb(null, true)
@@ -17,17 +17,17 @@ var upload = multer({
   }
 })
 
-// 新增文章
+// add new article
 router.post('/newPost', function (req, res) {
-  let auth = req.session.uid;
-  let content = req.body.content;
+  const auth = req.session.uid;
+  const content = req.body.content;
   
   firebaseDb.ref('user/' + auth).once('value')
   .then(function (snapshot) {
       let articleId = '';
       let username = snapshot.val().username;
       
-      articleId = firebaseDb.ref('articles/').push(); // 隨機產生一個id
+      articleId = firebaseDb.ref('articles/').push(); // generate random id
       articleId = articleId.toString().slice(45, 65);
       firebaseDb.ref('/articles/' + articleId).once('value', function (snapshot) {
         time = snapshot.val().time;
@@ -56,8 +56,8 @@ router.post('/newPost', function (req, res) {
 
 // 修改文章
 router.post('/newPost/:id', function (req, res) {
-  let auth = req.session.uid;
-  let content = req.body.content;
+  const auth = req.session.uid;
+  const content = req.body.content;
 
   firebaseDb.ref('user/' + auth).once('value')
   .then(function (snapshot) {
@@ -83,12 +83,12 @@ router.post('/newPost/:id', function (req, res) {
     })
 })
 
-// 加入圖片
+// insert image
 router.post('/addImg', upload.single('image'), function (req, res) {
   let encode_image = req.file.buffer.toString("base64");
   let articleId = '';
   if(!req.session.articleId) {
-    articleId = firebaseDb.ref('articles/').push(); // 隨機產生一個id
+    articleId = firebaseDb.ref('articles/').push(); // generate random id
     articleId = articleId.toString().slice(45, 65);
     req.session.articleId = articleId;
     firebaseDb.ref('/articles/' + req.session.articleId).set({'img': ''});
@@ -120,9 +120,9 @@ router.post('/addImg', upload.single('image'), function (req, res) {
     });
 })
 
-// 進入新增文章頁面
+// enter newpost page
 router.get('/newPost', function (req, res) {
-  let auth = req.session.uid;
+  const auth = req.session.uid;
 
   firebaseDb.ref('user/' + auth).once('value', function (snapshot) {
     let article = {
@@ -139,10 +139,10 @@ router.get('/newPost', function (req, res) {
   })
 });
 
-// 進入編輯文章頁面
+// enter edit article page
 router.get('/newPost/:id', function (req, res) {
-  let auth = req.session.uid;
-  let articleId = req.params.id || '';
+  const auth = req.session.uid;
+  const articleId = req.params.id || '';
   req.session.articleId = articleId;
 
   let article = {}

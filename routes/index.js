@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var firebaseDb = require('../connection/firebase_admin.js');
+const express = require('express');
+const router = express.Router();
+const firebaseDb = require('../connection/firebase_admin.js');
 
-// 獲得全部已發布的文章
+// get all published articles
 router.get('/index', function (req, res) {
-  let auth = req.session.uid;
+  const auth = req.session.uid;
   firebaseDb.ref('articles').once('value', function (snapshot) {
     let articles = [];
 
@@ -12,12 +12,12 @@ router.get('/index', function (req, res) {
       articles.push(snapshotChild.val());
     })
 
-    // 搜尋篩選
+    // search filter
     let length = articles.length;
     let tempArticles = [];
     if (req.session.search !== undefined) {
       for(let i = 0; i < length; i++) {
-        // 假如文章標題有搜尋的字串時
+        // if search string is a part of article title
         if ((articles[i].title.search(req.session.search)) !== -1) {
           tempArticles.push(articles[i]);
         }
@@ -34,7 +34,7 @@ router.get('/index', function (req, res) {
   })
 });
 
-// 搜尋文章
+// search article
 router.post('/index', function (req, res) {
   req.session.search = req.body.search;
   res.redirect('/index');

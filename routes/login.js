@@ -1,11 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var firebase = require('../connection/firebase_auth.js');
+const express = require('express');
+const router = express.Router();
+const firebase = require('../connection/firebase_auth.js');
 
-// 登入輸入資料
+// login input feature
 router.post('/login', function (req, res) {
-  let email = req.body.email;
-  let password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function (user) {
       req.session.uid = user.user.uid;
@@ -24,9 +24,9 @@ router.post('/login', function (req, res) {
     });
 })
 
-// 登入功能
+// enter login page
 router.get('/login', function (req, res) {
-  let auth = req.session.uid;
+  const auth = req.session.uid;
   res.render('login', {
     error: req.flash('error'),
     auth

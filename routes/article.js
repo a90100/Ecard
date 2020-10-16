@@ -1,12 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var firebaseDb = require('../connection/firebase_admin.js');
-var { getTime } = require('../source/js/getTime');
+const express = require('express');
+const router = express.Router();
+const firebaseDb = require('../connection/firebase_admin.js');
+const { getTime } = require('../source/js/getTime');
 
-// 印出單一文章
+// print an article
 router.get('/article/:id', function (req, res) {
-  let auth = req.session.uid;
-  let id = req.params.id;
+  const auth = req.session.uid;
+  const id = req.params.id;
   req.session.id = id;
   req.session.articleId = '';
   let responses = [];
@@ -29,15 +29,15 @@ router.get('/article/:id', function (req, res) {
   })
 })
 
-// 新增回應
+// add new response
 router.post('/article/:id', function (req, res) {
-  let id = req.params.id;
-  let response = req.body.response;
-  let responseId = firebaseDb.ref('responses/' + id).push();
+  const id = req.params.id;
+  const response = req.body.response;
+  const responseId = firebaseDb.ref('responses/' + id).push();
 
   firebaseDb.ref('/user/' + req.session.uid).once('value')
     .then(function (snapshot) {
-      let username = snapshot.val().username;
+      const username = snapshot.val().username;
 
       let responseContent = {
         'username': username,
