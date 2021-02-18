@@ -22,7 +22,7 @@ https://ecard-new.herokuapp.com/index
 ## 單篇文章，包含留言板
 ![](https://i.imgur.com/cHpiRUQ.png)
 
-## 編輯和發布文章
+## 編輯和發布文章(可上傳圖片)
 ![](https://i.imgur.com/oUirAap.png)
 
 ## 功能
@@ -31,21 +31,24 @@ https://ecard-new.herokuapp.com/index
 3. 可對文章進行留言
 4. 左側欄可以觀看特定類別文章
 5. 可利用標題搜尋特定文章
+6. 文章中能插入圖片
 
 ## 本作品使用主要技術
 * Pug
 * Sass
 * Bootstrap
 * Node.js
+* JavaScript
 * Express.js
 * Firebase
+* imgur Api
 
 ## 指令
 啟動應用程式: npm start
 
 啟動 gulp: gulp watch
 
-## 解決 firebase 重複 register:
+## 解決 firebase 重複 register error:
 "firebase": "^6.4.1",
 "firebase-admin": "^8.1.0",
 
